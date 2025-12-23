@@ -1,3 +1,5 @@
 spring:
   application:
     name: Nagar_Alert_Hub
+server:
+  port: 8081
