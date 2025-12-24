@@ -20,6 +20,7 @@ public class User {
     private String lastName;
     private String address;
     private String email;
+    private String whatsapp;
     @ServerTimestamp
     private Timestamp createdAt;
 }
