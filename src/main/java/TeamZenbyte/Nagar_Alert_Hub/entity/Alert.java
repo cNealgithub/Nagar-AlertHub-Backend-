@@ -17,8 +17,8 @@ public class Alert {
     private String id;
     private String badge;
     private String title;
-    //private String confidence;
-    //private String object_detected;
+    private double confidence;   // confidence/delay fieldfor determining priproty of alert
+    private String priority;     // Derived from confidence
     private String description;
     private String location;
     private String time;

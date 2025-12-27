@@ -16,5 +16,6 @@ public class AlertDTO {
     private String title;
     private String description;
     private String location;
+    private double confidence;
     private String time;
 }

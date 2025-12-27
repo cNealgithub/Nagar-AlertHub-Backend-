@@ -4,6 +4,7 @@ import TeamZenbyte.Nagar_Alert_Hub.dto.AlertDTO;
 import TeamZenbyte.Nagar_Alert_Hub.dto.AlertResponseDTO;
 import TeamZenbyte.Nagar_Alert_Hub.entity.Alert;
 import TeamZenbyte.Nagar_Alert_Hub.service.AlertService;
+import TeamZenbyte.Nagar_Alert_Hub.util.Priorty_determiner;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 public class AlertServiceImpl implements AlertService {
     private final ModelMapper modelMapper;
     private final Firestore firestore;
+    private final Priorty_determiner priortyDeterminer;
 
     @Override
     public AlertResponseDTO addAlert(AlertDTO alertDTO) {
@@ -31,6 +33,7 @@ public class AlertServiceImpl implements AlertService {
             LocalTime time = LocalTime.now();
             String alertTime = time.toString();
             newAlert.setTime(alertTime);
+            newAlert.setPriority(priortyDeterminer.mapPriority(newAlert.getConfidence()));
             ApiFuture<DocumentReference> alerts = firestore.collection("alerts").add(newAlert);
             // Get the generated document reference
             DocumentReference docRef = alerts.get();
