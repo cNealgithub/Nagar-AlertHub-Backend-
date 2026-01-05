@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import com.google.cloud.firestore.QueryDocumentSnapshot;
 
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -30,8 +31,9 @@ public class AlertServiceImpl implements AlertService {
     public AlertResponseDTO addAlert(AlertDTO alertDTO) {
         try{
             Alert newAlert = modelMapper.map(alertDTO, Alert.class);
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
             LocalTime time = LocalTime.now();
-            String alertTime = time.toString();
+            String alertTime = time.format(formatter);
             newAlert.setTime(alertTime);
             newAlert.setPriority(priortyDeterminer.mapPriority(newAlert.getConfidence()));
             ApiFuture<DocumentReference> alerts = firestore.collection("alerts").add(newAlert);

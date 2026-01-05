@@ -17,5 +17,6 @@ public class AlertResponseDTO {
         private String title;
         private String description;
         private String location;
+        private String priority;
         private String time;
 }
